@@ -3,7 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key')
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'mri_monitor.core',
     'mri_monitor.soap_server',
     'mri_monitor.api',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -26,6 +27,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 TEMPLATES = [
@@ -104,3 +106,4 @@ LOGGING = {
 
 SUPPORTED_MEMBER = os.environ.get('SUPPORTED_MEMBER', '4DMRI')
 SUPPORTED_PASSWORD = os.environ.get('SUPPORTED_PASSWORD', 'Pass')
+CORS_ALLOW_ALL_ORIGINS = True

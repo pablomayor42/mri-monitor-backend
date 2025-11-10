@@ -19,6 +19,15 @@ def sensors_list(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def sensor_readings_list(request):
+    member = request.GET.get('member_id')
+    qs = SensorReading.objects.select_related('sensor','device').order_by('-generated_at','-received_at')
+    if member:
+        qs = qs.filter(device__member_id=member)
+    serializer = SensorReadingSerializer(qs, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def sensor_readings(request):
     """
     GET /api/sensor_readings
