@@ -1,0 +1,20 @@
+================================================================================
+Time: 2025-11-05T23:02:09.405328
+Client: 127.0.0.1
+Method: POST /a2b/RemoteAccessManager
+SOAP Operation: pushProperties
+Service: RemoteAccessManager
+Member: FI1126MR01SMM3
+Body Type: sensor_data
+Sensors: 19 properties
+  A2: 52.72
+  A3: 7.72
+  A5: 10.5
+  A7: 43.32
+  A8: 4.33
+  A9: 3.37
+  A12: 4.29
+  A13: 3.37
+  RF: 0
+  CPR1: 00
+--------------------------------------------------------------------------------

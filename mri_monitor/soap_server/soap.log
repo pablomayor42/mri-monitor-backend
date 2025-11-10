@@ -1,0 +1,122 @@
+[2025-11-05 22:53:05,657] DEBUG mri_monitor.soap_server: RAW SOAP request received (first 2000 chars):
+<?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>pushProperties</Operation><ServiceName>RemoteAccessManager</ServiceName><SecurityContext><Credentials><MemberId>FI1126MR01SMM3</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1"><MemberId>FI1126MR01SMM3</MemberId><Reason>MONITORING</Reason><TaskId taskType="UNSOLICITED"></TaskId><Properties generatedAt="2025-06-16T10:34:00Z"><Property name="A2">52.72</Property><Property name="A3">7.72</Property><Property name="A5">10.5</Property><Property name="A7">43.32</Property><Property name="A8">4.33</Property><Property name="A9">3.37</Property><Property name="A12">4.29</Property><Property name="A13">3.37</Property><Property name="RF">0</Property><Property name="CPR1">00</Property><Property name="CDC1">100</Property><Property name="FM">0</Property><Property name="SM">0</Property><Property name="HO">0</Property><Property name="HDC">0</Property><Property name="F1">2</Property><Property name="F2">25</Property><Property name="F3">0</Property><Property name="F4">0</Property></Properties></pushProperties></Body></Envelope>
+[2025-11-05 22:53:05,658] DEBUG mri_monitor.soap_server: Header found: True
+[2025-11-05 22:53:05,658] DEBUG mri_monitor.soap_server: Body found: True
+[2025-11-05 22:53:05,658] INFO mri_monitor.soap_server: Parsed RequestHeader: Operation=pushProperties ServiceName=RemoteAccessManager Member=FI1126MR01SMM3
+[2025-11-05 22:53:05,658] DEBUG mri_monitor.soap_server: Credentials: MemberId=FI1126MR01SMM3 Password=password
+[2025-11-05 22:53:05,658] INFO mri_monitor.soap_server: Parsed properties count=19
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: A2 = 52.72
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: A3 = 7.72
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: A5 = 10.5
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: A7 = 43.32
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: A8 = 4.33
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: A9 = 3.37
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: A12 = 4.29
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: A13 = 3.37
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: RF = 0
+[2025-11-05 22:53:05,659] DEBUG mri_monitor.soap_server: Property: CPR1 = 00
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: CDC1 = 100
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: FM = 0
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: SM = 0
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: HO = 0
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: HDC = 0
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: F1 = 2
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: F2 = 25
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: F3 = 0
+[2025-11-05 22:53:05,660] DEBUG mri_monitor.soap_server: Property: F4 = 0
+[2025-11-05 22:53:05,666] DEBUG mri_monitor.soap_server: Saved sensor A2 (created=True) last_value=52.72
+[2025-11-05 22:53:05,671] DEBUG mri_monitor.soap_server: Saved sensor A3 (created=True) last_value=7.72
+[2025-11-05 22:53:05,676] DEBUG mri_monitor.soap_server: Saved sensor A5 (created=True) last_value=10.5
+[2025-11-05 22:53:05,680] DEBUG mri_monitor.soap_server: Saved sensor A7 (created=True) last_value=43.32
+[2025-11-05 22:53:05,685] DEBUG mri_monitor.soap_server: Saved sensor A8 (created=True) last_value=4.33
+[2025-11-05 22:53:05,689] DEBUG mri_monitor.soap_server: Saved sensor A9 (created=True) last_value=3.37
+[2025-11-05 22:53:05,695] DEBUG mri_monitor.soap_server: Saved sensor A12 (created=True) last_value=4.29
+[2025-11-05 22:53:05,700] DEBUG mri_monitor.soap_server: Saved sensor A13 (created=True) last_value=3.37
+[2025-11-05 22:53:05,705] DEBUG mri_monitor.soap_server: Saved sensor RF (created=True) last_value=0.0
+[2025-11-05 22:53:05,710] DEBUG mri_monitor.soap_server: Saved sensor CPR1 (created=True) last_value=0.0
+[2025-11-05 22:53:05,715] DEBUG mri_monitor.soap_server: Saved sensor CDC1 (created=True) last_value=100.0
+[2025-11-05 22:53:05,720] DEBUG mri_monitor.soap_server: Saved sensor FM (created=True) last_value=0.0
+[2025-11-05 22:53:05,725] DEBUG mri_monitor.soap_server: Saved sensor SM (created=True) last_value=0.0
+[2025-11-05 22:53:05,730] DEBUG mri_monitor.soap_server: Saved sensor HO (created=True) last_value=0.0
+[2025-11-05 22:53:05,735] DEBUG mri_monitor.soap_server: Saved sensor HDC (created=True) last_value=0.0
+[2025-11-05 22:53:05,740] DEBUG mri_monitor.soap_server: Saved sensor F1 (created=True) last_value=2.0
+[2025-11-05 22:53:05,745] DEBUG mri_monitor.soap_server: Saved sensor F2 (created=True) last_value=25.0
+[2025-11-05 22:53:05,750] DEBUG mri_monitor.soap_server: Saved sensor F3 (created=True) last_value=0.0
+[2025-11-05 22:53:05,755] DEBUG mri_monitor.soap_server: Saved sensor F4 (created=True) last_value=0.0
+[2025-11-05 22:53:05,755] INFO mri_monitor.soap_server: Total sensors saved/updated: 19
+[2025-11-05 23:02:09,401] DEBUG mri_monitor.soap_server: INICIO REQUEST RAW
+[2025-11-05 23:02:09,401] DEBUG mri_monitor.soap_server: Client: 127.0.0.1
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server: Path: /a2b/RemoteAccessManager
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server: Method: POST
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server: Headers:
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server:   Content-Length: 1363
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server:   Content-Type: text/xml
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server:   Host: reso-test.4dmedica.com
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server:   User-Agent: QSA/4.0.33
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server:   Accept-Encoding: gzip, br
+[2025-11-05 23:02:09,402] DEBUG mri_monitor.soap_server:   Cache-Control: no-cache
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   Cdn-Loop: cloudflare; loops=1
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   Cf-Connecting-Ip: 81.43.77.183
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   Cf-Ipcountry: ES
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   Cf-Ray: 999f9e55d97d7b61-MAD
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   Cf-Visitor: {"scheme":"https"}
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   Cf-Warp-Tag-Id: bba26022-0ca5-4a47-9957-87ea2995693a
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   Connection: keep-alive
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   Postman-Token: 89bdedf3-de2c-41dc-a391-c6f6deec7741
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   X-Forwarded-For: 81.43.77.183
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server:   X-Forwarded-Proto: https
+[2025-11-05 23:02:09,403] DEBUG mri_monitor.soap_server: Body:
+[2025-11-05 23:02:09,404] DEBUG mri_monitor.soap_server: <?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>pushProperties</Operation><ServiceName>RemoteAccessManager</ServiceName><SecurityContext><Credentials><MemberId>FI1126MR01SMM3</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1"><MemberId>FI1126MR01SMM3</MemberId><Reason>MONITORING</Reason><TaskId taskType="UNSOLICITED"></TaskId><Properties generatedAt="2025-06-16T10:34:00Z"><Property name="A2">52.72</Property><Property name="A3">7.72</Property><Property name="A5">10.5</Property><Property name="A7">43.32</Property><Property name="A8">4.33</Property><Property name="A9">3.37</Property><Property name="A12">4.29</Property><Property name="A13">3.37</Property><Property name="RF">0</Property><Property name="CPR1">00</Property><Property name="CDC1">100</Property><Property name="FM">0</Property><Property name="SM">0</Property><Property name="HO">0</Property><Property name="HDC">0</Property><Property name="F1">2</Property><Property name="F2">25</Property><Property name="F3">0</Property><Property name="F4">0</Property></Properties></pushProperties></Body></Envelope>
+[2025-11-05 23:02:09,404] DEBUG mri_monitor.soap_server: FIN REQUEST RAW
+[2025-11-05 23:02:09,404] DEBUG mri_monitor.soap_server: Request identificada como SOAP
+[2025-11-05 23:02:09,404] DEBUG mri_monitor.soap_server: RAW XML recibido (preview):
+<?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>pushProperties</Operation><ServiceName>RemoteAccessManager</ServiceName><SecurityContext><Credentials><MemberId>FI1126MR01SMM3</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1"><MemberId>FI1126MR01SMM3</MemberId><Reason>MONITORING</Reason><TaskId taskType="UNSOLICITED"></TaskId><Properties generatedAt="2025-06-16T10:34:00Z"><Property name="A2">52.72</Property><Property name="A3">7.72</Property><Property name="A5">10.5</Property><Property name="A7">43.32</Property><Property name="A8">4.33</Property><Property name="A9">3.37</Property><Property name="A12">4.29</Property><Property name="A13">3.37</Property><Property name="RF">0</Property><Property name="CPR1">00</Property><Property name="CDC1">100</Property><Property name="FM">0</Property><Property name="SM">0</Property><Property name="HO">0</Property><Property name="HDC">0</Property><Property name="F1">2</Property><Property name="F2">25</Property><Property name="F3">0</Property><Property name="F4">0</Property></Properties></pushProperties></Body></Envelope>
+[2025-11-05 23:02:09,404] DEBUG mri_monitor.soap_server: Header parseado: {'operation': 'pushProperties', 'service_name': 'RemoteAccessManager', 'member_id': 'FI1126MR01SMM3', 'password': 'password'}
+[2025-11-05 23:02:09,404] DEBUG mri_monitor.soap_server: Namespace extraído del body: urn:questra-a2b:RemoteAccessManager_v1_1
+[2025-11-05 23:02:09,404] DEBUG mri_monitor.soap_server: Body parseado para pushProperties: {'operation': 'pushProperties', 'data': {}, 'member_id': 'FI1126MR01SMM3', 'reason': 'MONITORING', 'timestamp': '2025-06-16T10:34:00Z', 'properties': {'A2': '52.72', 'A3': '7.72', 'A5': '10.5', 'A7': '43.32', 'A8': '4.33', 'A9': '3.37', 'A12': '4.29', 'A13': '3.37', 'RF': '0', 'CPR1': '00', 'CDC1': '100', 'FM': '0', 'SM': '0', 'HO': '0', 'HDC': '0', 'F1': '2', 'F2': '25', 'F3': '0', 'F4': '0'}, 'type': 'sensor_data'}
+[2025-11-05 23:02:09,405] DEBUG mri_monitor.soap_server: SOAP parsing exitoso para operación: pushProperties
+[2025-11-05 23:02:09,405] DEBUG mri_monitor.soap_server: SOAP parsing exitoso
+[2025-11-05 23:02:09,405] DEBUG mri_monitor.soap_server: SOAP validation exitoso
+[2025-11-05 23:02:09,406] INFO mri_monitor.soap_server: Total sensors saved/updated: 0
+[2025-11-05 23:02:09,406] DEBUG mri_monitor.soap_server: Construyendo respuesta para pushProperties con namespace: urn:questra-a2b:RemoteAccessManager_v1_1
+[2025-11-05 23:02:09,406] DEBUG mri_monitor.soap_server: INICIO RESPONSE RAW
+[2025-11-05 23:02:09,406] DEBUG mri_monitor.soap_server: Status: 200
+[2025-11-05 23:02:09,406] DEBUG mri_monitor.soap_server: Response Body:
+[2025-11-05 23:02:09,406] DEBUG mri_monitor.soap_server: 
+[2025-11-05 23:02:09,406] DEBUG mri_monitor.soap_server: FIN RESPONSE RAW
+[2025-11-05 23:02:09,407] INFO mri_monitor.soap_server: SOAP processed: pushProperties from FI1126MR01SMM3
+[2025-11-05 23:10:17,135] DEBUG mri_monitor.soap_server: RAW SOAP (preview): <?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>pushProperties</Operation><ServiceName>RemoteAccessManager</ServiceName><SecurityContext><Credentials><MemberId>FI1126MR01SMM3</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1"><MemberId>FI1126MR01SMM3</MemberId><Reason>MONITORING</Reason><TaskId taskType="UNSOLICITED"></TaskId><Properties generatedAt="2025-06-16T10:34:00Z"><Property name="A2">52.72</Property><Property name="A3">7.72</Property><Property name="A5">10.5</Property><Property name="A7">43.32</Property><Property name="A8">4.33</Property><Property name="A9">3.37</Property><Property name="A12">4.29</Property><Property name="A13">3.37</Property><Property name="RF">0</Property><Property name="CPR1">00</Property><Property name="CDC1">100</Property><Property name="FM">0</Property><Property name="SM">0</Property><Property name="HO">0</Property><Property name="HDC">0</Property><Property name="F1">2</Property><Property name="F2">25</Property><Property name="F3">0</Property><Property name="F4">0</Property></Properties></pushProperties></Body></Envelope>
+[2025-11-05 23:10:17,135] INFO mri_monitor.soap_server: pushProperties: found 19 properties (generatedAt=2025-06-16T10:34:00Z)
+[2025-11-05 23:10:17,146] DEBUG mri_monitor.soap_server: Saved reading for He_Level (A2): 52.72 (numeric=52.72)
+[2025-11-05 23:10:17,154] DEBUG mri_monitor.soap_server: Saved reading for Water_Flow (A3): 7.72 (numeric=7.72)
+[2025-11-05 23:10:17,163] DEBUG mri_monitor.soap_server: Saved reading for Water_Temp (A5): 10.5 (numeric=10.5)
+[2025-11-05 23:10:17,172] DEBUG mri_monitor.soap_server: Saved reading for Shield_Si410 (A7): 43.32 (numeric=43.32)
+[2025-11-05 23:10:17,180] DEBUG mri_monitor.soap_server: Saved reading for Recon_RuO (A8): 4.33 (numeric=4.33)
+[2025-11-05 23:10:17,187] DEBUG mri_monitor.soap_server: Saved reading for Recon_Si410 (A9): 3.37 (numeric=3.37)
+[2025-11-05 23:10:17,196] DEBUG mri_monitor.soap_server: Saved reading for Coldhead_RuO (A12): 4.29 (numeric=4.29)
+[2025-11-05 23:10:17,204] DEBUG mri_monitor.soap_server: Saved reading for He_Pressure (A13): 3.37 (numeric=3.37)
+[2025-11-05 23:10:17,211] DEBUG mri_monitor.soap_server: Saved reading for RF (RF): 0 (numeric=0.0)
+[2025-11-05 23:10:17,217] DEBUG mri_monitor.soap_server: Saved reading for CPR1 (CPR1): 00 (numeric=0.0)
+[2025-11-05 23:10:17,222] DEBUG mri_monitor.soap_server: Saved reading for CDC1 (CDC1): 100 (numeric=100.0)
+[2025-11-05 23:10:17,228] DEBUG mri_monitor.soap_server: Saved reading for FM (FM): 0 (numeric=0.0)
+[2025-11-05 23:10:17,234] DEBUG mri_monitor.soap_server: Saved reading for SM (SM): 0 (numeric=0.0)
+[2025-11-05 23:10:17,241] DEBUG mri_monitor.soap_server: Saved reading for HO (HO): 0 (numeric=0.0)
+[2025-11-05 23:10:17,248] DEBUG mri_monitor.soap_server: Saved reading for HDC (HDC): 0 (numeric=0.0)
+[2025-11-05 23:10:17,254] DEBUG mri_monitor.soap_server: Saved reading for F1 (F1): 2 (numeric=2.0)
+[2025-11-05 23:10:17,260] DEBUG mri_monitor.soap_server: Saved reading for F2 (F2): 25 (numeric=25.0)
+[2025-11-05 23:10:17,268] DEBUG mri_monitor.soap_server: Saved reading for F3 (F3): 0 (numeric=0.0)
+[2025-11-05 23:10:17,274] DEBUG mri_monitor.soap_server: Saved reading for F4 (F4): 0 (numeric=0.0)
+[2025-11-05 23:10:17,274] INFO mri_monitor.soap_server: Total properties saved: 19
+[2025-11-05 23:11:49,680] DEBUG mri_monitor.soap_server: RAW SOAP (preview): <?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>submitFault</Operation><ServiceName>MonitorManager</ServiceName><SecurityContext><Credentials><MemberId>FI1126MR01SMM3</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><submitFault xmlns="urn:questra-a2b:MonitorManager_v1_0"><Fault><MemberId>FI1126MR01SMM3</MemberId><ErrorCode>025</ErrorCode><Abstract>ALRM</Abstract><Detail>160625 1130 ALRM 025 An RFS request for error code 25 is being sent to the OLC.</Detail><GeneratedAt>2025-06-16T10:30:00Z</GeneratedAt></Fault></submitFault></Body></Envelope>
+
+[2025-11-05 23:11:49,684] INFO mri_monitor.soap_server: submitFault saved ErrorReport code=25
+[2025-11-05 23:56:59,276] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>submitFault</Operation><ServiceName>MonitorManager</ServiceName><SecurityContext><Credentials><MemberId>FI1126MR01SMM3</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><submitFault xmlns="urn:questra-a2b:MonitorManager_v1_0"><Fault><MemberId>FI1126MR01SMM3</MemberId><ErrorCode>025</ErrorCode><Abstract>ALRM</Abstract><Detail>160625 1130 ALRM 025 An RFS request for error code 25 is being sent to the OLC.</Detail><GeneratedAt>2025-06-16T10:30:00Z</GeneratedAt></Fault></submitFault></Body></Envelope>
+
+[2025-11-05 23:56:59,283] INFO mri_monitor.soap_server: Created new Device for MemberId=FI1126MR01SMM3
+[2025-11-05 23:56:59,283] DEBUG mri_monitor.soap_server: SOAP operation detected: submitFault
+[2025-11-05 23:56:59,283] INFO mri_monitor.soap_server: submitFault parsed fault: {'MemberId': 'FI1126MR01SMM3', 'ErrorCode': '025', 'Abstract': 'ALRM', 'Detail': '160625 1130 ALRM 025 An RFS request for error code 25 is being sent to the OLC.', 'GeneratedAt': '2025-06-16T10:30:00Z'}
+[2025-11-05 23:56:59,287] INFO mri_monitor.soap_server: Created ErrorReport id=0180bce1-5b64-4bb2-9f5c-04d5e4f1b8f3 code=25 device=FI1126MR01SMM3
+[2025-11-05 23:57:10,462] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>pushProperties</Operation><ServiceName>RemoteAccessManager</ServiceName><SecurityContext><Credentials><MemberId>FI1126MR01SMM3</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1"><MemberId>FI1126MR01SMM3</MemberId><Reason>MONITORING</Reason><TaskId taskType="UNSOLICITED"></TaskId><Properties generatedAt="2025-06-16T10:34:00Z"><Property name="A2">52.72</Property><Property name="A3">7.72</Property><Property name="A5">10.5</Property><Property name="A7">43.32</Property><Property name="A8">4.33</Property><Property name="A9">3.37</Property><Property name="A12">4.29</Property><Property name="A13">3.37</Property><Property name="RF">0</Property><Property name="CPR1">00</Property><Property name="CDC1">100</Property><Property name="FM">0</Property><Property name="SM">0</Property><Property name="HO">0</Property><Property name="HDC">0</Property><Property name="F1">2</Property><Property name="F2">25</Property><Property name="F3">0</Property><Property name="F4">0</Property></Properties></pushProperties></Body></Envelope>
+[2025-11-05 23:57:10,463] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-11-05 23:57:10,463] INFO mri_monitor.soap_server: pushProperties: 19 props, generatedAt=2025-06-16T10:34:00Z, device=FI1126MR01SMM3
+[2025-11-05 23:57:10,613] INFO mri_monitor.soap_server: pushProperties saved 19 readings for device FI1126MR01SMM3
