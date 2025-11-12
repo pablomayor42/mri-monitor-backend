@@ -13,5 +13,6 @@ urlpatterns = [
     path('api/sensor_readings', api_views.sensor_readings),
     path('api/notifications', api_views.notifications_list),
     path('api/devices', api_views.devices_list),
+    path('api/sensor_readings', api_views.sensor_readings),
 
 ]

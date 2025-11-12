@@ -29,18 +29,22 @@ def sensor_readings_list(request):
 
 @api_view(['GET'])
 def sensor_readings(request):
-    """
-    GET /api/sensor_readings
-    Optional params: member_id, sensor_name
-    """
     member = request.GET.get('member_id')
-    sensor_name = request.GET.get('sensor_name')
-    qs = SensorReading.objects.all().order_by('-received_at')
+    sensor_q = request.GET.get('sensor_name') or request.GET.get('sensor_code')
+    qs = SensorReading.objects.select_related('device','sensor').order_by('-generated_at','-received_at')
     if member:
         qs = qs.filter(device__member_id=member)
-    if sensor_name:
-        qs = qs.filter(sensor__name=sensor_name)
-    serializer = SensorReadingSerializer(qs[:200], many=True)  # limit 200 by default
+    if sensor_q:
+        # try by code then by sensor name
+        qs = qs.filter(models.Q(sensor__code__iexact=sensor_q) | models.Q(sensor__name__icontains=sensor_q))
+    # limit to last N if provided
+    limit = request.GET.get('limit')
+    if limit:
+        try:
+            qs = qs[:int(limit)]
+        except:
+            pass
+    serializer = SensorReadingSerializer(qs, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
