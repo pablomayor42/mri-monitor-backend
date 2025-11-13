@@ -106,4 +106,29 @@ LOGGING = {
 
 SUPPORTED_MEMBER = os.environ.get('SUPPORTED_MEMBER', '4DMRI')
 SUPPORTED_PASSWORD = os.environ.get('SUPPORTED_PASSWORD', 'Pass')
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    # añade otros orígenes que uses
+]
+CORS_ALLOW_CREDENTIALS = True
+
+# (opcional) permitir encabezados comunes
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'no-reply@yourdomain.local'
+
+FRONTEND_BASE = 'http://localhost:5173'

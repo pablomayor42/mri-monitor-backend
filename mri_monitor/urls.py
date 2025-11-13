@@ -14,5 +14,9 @@ urlpatterns = [
     path('api/notifications', api_views.notifications_list),
     path('api/devices', api_views.devices_list),
     path('api/sensor_readings', api_views.sensor_readings),
+    path('api/login', api_views.login_view),
+    path('api/password_reset', api_views.password_reset_request),
+    path('api/password_reset_confirm', api_views.password_reset_confirm),
+    path('api/logout', api_views.logout_view),
 
 ]

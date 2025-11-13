@@ -4,7 +4,10 @@ from datetime import datetime
 from xml.etree import ElementTree as ET
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db import transaction
 from django.utils import timezone
+from typing import Dict, Optional
+from django.utils.dateparse import parse_datetime
 
 from mri_monitor.core.models import Device, Sensor, SensorReading, ErrorReport
 
@@ -19,9 +22,10 @@ SENSOR_CODE_MAP = {
     "A9": ("Recon_Si410", "K", "Recondensor Si410"),
     "A12": ("Coldhead_RuO", "K", "Coldhead RuO"),
     "A13": ("He_Pressure", "psi", "Helium Pressure"),
-    "RF": ("RF", "", "RF Flag"),
+    "RF": ("RF", "", "RF Active Pluring This Minute"),
     "CPR1": ("CPR1", "", "Compressor1 Status Code"),
-    "CDC1": ("CDC1", "", "Compressor1 Duty Cycle"),
+    "CDC1": ("CDC1", "%", "Compressor1 Duty Cycle"),
+    "CDC2": ("CDC2", "%", "Compressor2 Duty Cycle"),
     "FM": ("FM", "", "Fill Mode"),
     "SM": ("SM", "", "Service Mode"),
     "HO": ("HO", "", "Heater On"),
@@ -146,62 +150,16 @@ def soap_endpoint(request):
     if operation == 'pushProperties':
         props, generated_at = _find_properties_and_generated_at(body)
         logger.info("pushProperties: %d props, generatedAt=%s, device=%s", len(props), generated_at, member_id)
-        saved = 0
-        for raw_code, raw_value in props.items():
-            # mapear nombre
-            mapping = SENSOR_CODE_MAP.get(raw_code)
-            if mapping:
-                key = mapping[0]
-            else:
-                key = raw_code  # si no hay mapping usa raw code
 
-            # obtener o crear sensor asociado al device
-            if device:
-                sensor, screated = Sensor.objects.get_or_create(device=device, name=key, defaults={'code': raw_code, 'type': 'measured'})
-            else:
-                # si no hay device, crear sensor con device=None no permitido por FK -> omitimos
-                logger.warning("No device for sensor %s; skipping (member_id missing)", raw_code)
-                continue
+        if member_id:
+            handle_push_properties(member_id, props, generated_at)
+        else:
+            logger.warning("pushProperties received without MemberId. Skipping.")
 
-            # parseo numérico seguro
-            value_text = (raw_value or '').strip()
-            value_numeric = None
-            if value_text != '':
-                try:
-                    value_numeric = float(value_text)
-                except Exception:
-                    value_numeric = None
-
-            # actualizar sensor.last_value si es numérico
-            if value_numeric is not None:
-                sensor.last_value = value_numeric
-            sensor.code = raw_code
-            sensor.timestamp = timezone.now()
-            sensor.save()
-
-            # crear lectura histórica
-            gen_dt = None
-            if generated_at:
-                try:
-                    gen_dt = datetime.fromisoformat(generated_at.replace('Z', '+00:00'))
-                except Exception:
-                    gen_dt = None
-
-            SensorReading.objects.create(
-                device=device,
-                sensor=sensor,
-                value_text=value_text,
-                value_numeric=value_numeric,
-                source_member=(member_id or ''),
-                generated_at=gen_dt
-            )
-            saved += 1
-        logger.info("pushProperties saved %d readings for device %s", saved, member_id)
-
-        # server_soap.py behavior: respond with empty 200 for pushProperties
         resp = HttpResponse("", content_type='text/plain', status=200)
         resp['Content-Length'] = '0'
         return resp
+
 
     # --- submitFault: crear ErrorReport asociado al device, guardar detail/abstract/generatedAt/rawXML ---
     if operation == 'submitFault':
@@ -244,3 +202,114 @@ def soap_endpoint(request):
     resp = HttpResponse("", content_type='text/plain', status=200)
     resp['Content-Length'] = '0'
     return resp
+
+def handle_push_properties(member_id: str, properties: Dict[str, str], generated_at: Optional[str] = None):
+    """
+    Ensure that for every pushProperties we write a SensorReading for ALL sensors of the device,
+    using previous values for sensors not updated in this push (so graphs stay continuous).
+    """
+    # parse timestamp (fallback to now)
+    ts = None
+    if generated_at:
+        try:
+            ts = parse_datetime(generated_at)
+            if ts is None:
+                ts = timezone.now()
+            elif timezone.is_naive(ts):
+                ts = timezone.make_aware(ts, timezone.get_default_timezone())
+        except Exception:
+            ts = timezone.now()
+    else:
+        ts = timezone.now()
+
+    # start atomic transaction
+    with transaction.atomic():
+        device, _ = Device.objects.get_or_create(member_id=member_id)
+
+        # load sensors for device
+        sensors_qs = Sensor.objects.filter(device=device)
+        sensors_by_code = {}
+        sensors_by_id = {}
+        for s in sensors_qs:
+            code = (getattr(s, 'code', None) or '').upper()
+            sensors_by_code[code] = s
+            sensors_by_id[s.id] = s
+
+        # Build snapshot: start from sensors' last_value
+        snapshot = {}
+        for s in sensors_qs:
+            key = (getattr(s, 'code', None) or getattr(s, 'name', None) or str(s.id)).upper()
+            # prefer numeric last_value if available
+            snapshot[key] = getattr(s, 'last_value', None)
+
+        # Apply incoming properties (properties keys may be codes like 'A3' or names)
+        incoming_keys = set()
+        for pname, raw in properties.items():
+            if not pname:
+                continue
+            key = pname.strip().upper()
+            incoming_keys.add(key)
+            sensor = sensors_by_code.get(key)
+            if not sensor:
+                # try to find by name (case-insensitive)
+                sensor = Sensor.objects.filter(device=device, name__iexact=pname.strip()).first()
+            if sensor:
+                s_key = (getattr(sensor, 'code', None) or getattr(sensor, 'name', None) or str(sensor.id)).upper()
+                # store raw value (string or numeric) in snapshot
+                snapshot[s_key] = raw
+            else:
+                # Optional: create sensor dynamically if desired
+                sensor = Sensor.objects.create(device=device, code=key, name=key, type='measured')
+                sensors_by_code[key] = sensor
+                snapshot[key] = raw
+
+        # Prepare SensorReading objects for ALL sensors (using snapshot)
+        readings_to_create = []
+        sensor_updates = []
+        for s_key, sensor in sensors_by_code.items():
+            # Use snapshot value (might be None)
+            val = snapshot.get(s_key)
+            # parse numeric if possible
+            value_numeric = None
+            value_text = None
+            if val is None:
+                value_text = None
+                value_numeric = None
+            else:
+                try:
+                    value_numeric = float(str(val))
+                    value_text = None
+                except Exception:
+                    value_numeric = None
+                    value_text = str(val)
+
+            reading = SensorReading(
+                device=device,
+                sensor=sensor,
+                value_numeric=value_numeric,
+                value_text=value_text,
+                generated_at=ts,
+                received_at=timezone.now()
+            )
+            readings_to_create.append(reading)
+
+            # update sensor.last_value only for sensors that were part of incoming properties
+            if s_key in incoming_keys:
+                # set last_value to numeric if numeric else None
+                if value_numeric is not None:
+                    sensor.last_value = value_numeric
+                else:
+                    # optional: keep previous numeric; here we set to None for non-numeric
+                    sensor.last_value = None
+                sensor.timestamp = ts
+                sensor_updates.append(sensor)
+
+        # bulk create readings
+        if readings_to_create:
+            SensorReading.objects.bulk_create(readings_to_create)
+
+        # bulk update sensors that changed
+        if sensor_updates:
+            Sensor.objects.bulk_update(sensor_updates, ['last_value', 'timestamp'])
+
+    return True
