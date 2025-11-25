@@ -1,1 +1,0 @@
-python listarArchivos.py C:\mri-monitor-backend\mri_monitor -o backend.txt -e .py
