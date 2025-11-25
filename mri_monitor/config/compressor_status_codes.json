@@ -1,0 +1,16 @@
+{
+  "00": "Normal operation - compressor running",
+  "10": "Compressor stopped, reason unknown",
+  "11": "Compressor stopped due to overheat",
+  "12": "Compressor stopped due to low He pressure",
+  "13": "Compressor stopped due to overheat and low pressure",
+  "20": "Compressor powered off or cable disconnected (no 24v signal)",
+  "30": "Compressor powered off or cable disconnected (no 24v signal)",
+  "31": "Compressor powered off or cable disconnected (no 24v signal)",
+  "32": "Compressor powered off or cable disconnected (no 24v signal)", 
+  "33": "Compressor powered off or cable disconnected (no 24v signal)",
+  "04": "Klixon error",
+  "08": "Compressor fuse tripped",
+  "14": "Klixon error",
+  "18": "Compressor fuse tripped"
+}

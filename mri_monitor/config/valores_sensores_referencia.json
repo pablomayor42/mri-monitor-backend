@@ -1,0 +1,10 @@
+{
+  "A2_Helium_Level": "Normal: >70%, Warning: 50-70%, Critical: <50%",
+  "A3_Water_Flow": "Normal: >4.0 L/min, Critical: <3.5 L/min", 
+  "A5_Water_Temp": "Optimal: 18-22°C, Warning: >24°C, Critical: >27°C",
+  "A7_Shield_Temp": "Normal: <60K, Warning: 60-80K, Critical: >100K",
+  "A8_Recon_RuO": "Normal: <4.5K, Warning: 5-6K, Critical: >6K",
+  "A9_Recon_Si410": "Normal: <10K, Warning: 10-20K, Critical: >20K",
+  "A12_Coldhead_RuO": "Normal: 3-7K, Warning: 7-10K, Critical: >10K",
+  "A13_He_Pressure": "Normal: 0.4-1.2 psi, Warning: >1.5 psi, Critical: >2.0 psi or <0.2 psi"
+}

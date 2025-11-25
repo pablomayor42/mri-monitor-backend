@@ -1,40 +1,60 @@
 # mri_monitor/soap_server/views.py
 import logging
-from datetime import datetime
-from xml.etree import ElementTree as ET
+import json
+import os
+
+from django.conf import settings
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db import transaction
 from django.utils import timezone
-from typing import Dict, Optional
 from django.utils.dateparse import parse_datetime
+
+from datetime import datetime
+from xml.etree import ElementTree as ET
+from typing import Dict, Optional
 
 from mri_monitor.core.models import Device, Sensor, SensorReading, ErrorReport
 
 logger = logging.getLogger('mri_monitor.soap_server')
 
-SENSOR_CODE_MAP = {
-    "A2": ("He_Level", "%", "Helium Level"),
-    "A3": ("Water_Flow", "L/min", "Water Flow"),
-    "A5": ("Water_Temp", "°C", "Water Temperature"),
-    "A7": ("Shield_Si410", "K", "Shield Temperature (Si410)"),
-    "A8": ("Recon_RuO", "K", "Recondensor RuO"),
-    "A9": ("Recon_Si410", "K", "Recondensor Si410"),
-    "A12": ("Coldhead_RuO", "K", "Coldhead RuO"),
-    "A13": ("He_Pressure", "psi", "Helium Pressure"),
-    "RF": ("RF", "", "RF Active Pluring This Minute"),
-    "CPR1": ("CPR1", "", "Compressor1 Status Code"),
-    "CDC1": ("CDC1", "%", "Compressor1 Duty Cycle"),
-    "CDC2": ("CDC2", "%", "Compressor2 Duty Cycle"),
-    "FM": ("FM", "", "Fill Mode"),
-    "SM": ("SM", "", "Service Mode"),
-    "HO": ("HO", "", "Heater On"),
-    "HDC": ("HDC", "", "Heater Duty Cycle"),
-    "F1": ("F1", "", "F1"),
-    "F2": ("F2", "", "F2"),
-    "F3": ("F3", "", "F3"),
-    "F4": ("F4", "", "F4"),
-}
+# --- CONFIG: carga de JSONs desde mri_monitor/config/ ---B
+BASE_CONFIG_PATH = os.path.join(settings.BASE_DIR, "mri_monitor", "config")
+
+def load_json(filename, default=None):
+    if default is None:
+        default = {}
+    path = os.path.join(BASE_CONFIG_PATH, filename)
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return default
+
+SENSORS_DEF = load_json("sensors.json", {})
+COMPRESSOR_CODES = load_json("compressor_status_codes.json", {})
+THRESHOLDS = load_json("valores_sensores_referencia.json", {})
+
+# Construimos SENSOR_CODE_MAP tolerando dos formatos:
+#  - "A2": { "key": "He_Level", "unit": "%", "description": "..." }
+#  - "MM3R": "Magnon software version"  (string -> tratamos como descripción)
+SENSOR_CODE_MAP = {}
+for code, info in SENSORS_DEF.items():
+    code_u = str(code).upper()
+    if isinstance(info, dict):
+        SENSOR_CODE_MAP[code_u] = (
+            info.get("key", code_u),
+            info.get("unit", ""),
+            info.get("description", "")
+        )
+    else:
+        # fallback: info es string (descripción)
+        SENSOR_CODE_MAP[code_u] = (
+            code_u,          # key: usar el código como key por defecto
+            "",              # unidad unknown
+            str(info)        # descripción proveniente del JSON
+        )
+
 
 ERROR_CODE_MAP = {
     # include as many entries as you need; example:
@@ -205,10 +225,11 @@ def soap_endpoint(request):
 
 def handle_push_properties(member_id: str, properties: Dict[str, str], generated_at: Optional[str] = None):
     """
-    Ensure that for every pushProperties we write a SensorReading for ALL sensors of the device,
-    using previous values for sensors not updated in this push (so graphs stay continuous).
+    Ensure that for every pushProperties we write a SensorReading for ALL sensors of the device
+    + apply normalizations + compressor translation + threshold-based alerts.
     """
-    # parse timestamp (fallback to now)
+
+    # parse timestamp
     ts = None
     if generated_at:
         try:
@@ -222,94 +243,127 @@ def handle_push_properties(member_id: str, properties: Dict[str, str], generated
     else:
         ts = timezone.now()
 
-    # start atomic transaction
     with transaction.atomic():
+
         device, _ = Device.objects.get_or_create(member_id=member_id)
 
-        # load sensors for device
         sensors_qs = Sensor.objects.filter(device=device)
-        sensors_by_code = {}
-        sensors_by_id = {}
-        for s in sensors_qs:
-            code = (getattr(s, 'code', None) or '').upper()
-            sensors_by_code[code] = s
-            sensors_by_id[s.id] = s
+        sensors_by_code = { (s.code or "").upper(): s for s in sensors_qs }
+        sensors_by_id = { s.id: s for s in sensors_qs }
 
-        # Build snapshot: start from sensors' last_value
         snapshot = {}
         for s in sensors_qs:
-            key = (getattr(s, 'code', None) or getattr(s, 'name', None) or str(s.id)).upper()
-            # prefer numeric last_value if available
-            snapshot[key] = getattr(s, 'last_value', None)
+            key = (getattr(s, "code", None) or getattr(s, "name", None) or str(s.id)).upper()
+            snapshot[key] = getattr(s, "last_value", None)
 
-        # Apply incoming properties (properties keys may be codes like 'A3' or names)
         incoming_keys = set()
-        for pname, raw in properties.items():
+
+        for pname, raw_value in properties.items():
             if not pname:
                 continue
-            key = pname.strip().upper()
-            incoming_keys.add(key)
-            sensor = sensors_by_code.get(key)
+
+            code = pname.strip().upper()
+            incoming_keys.add(code)
+
+            # ---- 1) Normalize using sensors.json
+            if code in SENSOR_CODE_MAP:
+                norm_name, norm_unit, _ = SENSOR_CODE_MAP[code]
+            else:
+                norm_name = code
+                norm_unit = ""
+
+            sensor = sensors_by_code.get(code)
+
             if not sensor:
-                # try to find by name (case-insensitive)
-                sensor = Sensor.objects.filter(device=device, name__iexact=pname.strip()).first()
-            if sensor:
-                s_key = (getattr(sensor, 'code', None) or getattr(sensor, 'name', None) or str(sensor.id)).upper()
-                # store raw value (string or numeric) in snapshot
-                snapshot[s_key] = raw
-            else:
-                # Optional: create sensor dynamically if desired
-                sensor = Sensor.objects.create(device=device, code=key, name=key, type='measured')
-                sensors_by_code[key] = sensor
-                snapshot[key] = raw
+                sensor = Sensor.objects.create(
+                    device=device,
+                    code=code,
+                    name=norm_name,
+                    type="measured"
+                )
+                sensors_by_code[code] = sensor
 
-        # Prepare SensorReading objects for ALL sensors (using snapshot)
-        readings_to_create = []
-        sensor_updates = []
-        for s_key, sensor in sensors_by_code.items():
-            # Use snapshot value (might be None)
-            val = snapshot.get(s_key)
-            # parse numeric if possible
-            value_numeric = None
-            value_text = None
-            if val is None:
-                value_text = None
-                value_numeric = None
-            else:
+            # CPR1 translation
+            if code == "CPR1":
+                human = COMPRESSOR_CODES.get(str(raw_value).strip(), None)
+                if human:
+                    raw_value = human
+
+            snapshot[code] = raw_value
+
+            # Update last_value
+            try:
+                sensor.last_value = float(raw_value)
+            except Exception:
+                sensor.last_value = None
+            sensor.timestamp = ts
+            sensor.save()
+
+            # ---- 2) Threshold-based notifications
+            if code in THRESHOLDS:
                 try:
-                    value_numeric = float(str(val))
-                    value_text = None
-                except Exception:
-                    value_numeric = None
-                    value_text = str(val)
+                    val = float(raw_value)
+                except:
+                    val = None
 
-            reading = SensorReading(
-                device=device,
-                sensor=sensor,
-                value_numeric=value_numeric,
-                value_text=value_text,
-                generated_at=ts,
-                received_at=timezone.now()
+                if val is not None:
+
+                    limits = THRESHOLDS[code]
+                    # Format example: "critical: > 27°C"
+                    crit = str(limits.get("critical", "")).replace("°C", "").replace(">", "").strip()
+                    warn = str(limits.get("warning", "")).replace("°C", "").replace(">", "").strip()
+
+                    try:
+                        crit_val = float(crit)
+                        warn_val = float(warn)
+                    except:
+                        crit_val = warn_val = None
+
+                    if crit_val and val > crit_val:
+                        ErrorReport.objects.create(
+                            device=device,
+                            sensor=sensor,
+                            error_code=f"{code}_CRIT",
+                            abstract="CRITICAL",
+                            detail=f"{sensor.name} exceeded critical threshold: {val}",
+                            generated_at=ts,
+                            raw_xml="AUTO_THRESHOLD"
+                        )
+
+                    elif warn_val and val > warn_val:
+                        ErrorReport.objects.create(
+                            device=device,
+                            sensor=sensor,
+                            error_code=f"{code}_WARN",
+                            abstract="WARNING",
+                            detail=f"{sensor.name} above warning threshold: {val}",
+                            generated_at=ts,
+                            raw_xml="AUTO_THRESHOLD"
+                        )
+
+        # ---- 3) Create SensorReadings snapshot for all sensors
+        readings_to_create = []
+
+        for code, sensor in sensors_by_code.items():
+            val = snapshot.get(code)
+            try:
+                value_numeric = float(val)
+                value_text = None
+            except:
+                value_numeric = None
+                value_text = str(val)
+
+            readings_to_create.append(
+                SensorReading(
+                    device=device,
+                    sensor=sensor,
+                    value_numeric=value_numeric,
+                    value_text=value_text,
+                    generated_at=ts,
+                    received_at=timezone.now()
+                )
             )
-            readings_to_create.append(reading)
 
-            # update sensor.last_value only for sensors that were part of incoming properties
-            if s_key in incoming_keys:
-                # set last_value to numeric if numeric else None
-                if value_numeric is not None:
-                    sensor.last_value = value_numeric
-                else:
-                    # optional: keep previous numeric; here we set to None for non-numeric
-                    sensor.last_value = None
-                sensor.timestamp = ts
-                sensor_updates.append(sensor)
-
-        # bulk create readings
-        if readings_to_create:
-            SensorReading.objects.bulk_create(readings_to_create)
-
-        # bulk update sensors that changed
-        if sensor_updates:
-            Sensor.objects.bulk_update(sensor_updates, ['last_value', 'timestamp'])
+        SensorReading.objects.bulk_create(readings_to_create)
 
     return True
