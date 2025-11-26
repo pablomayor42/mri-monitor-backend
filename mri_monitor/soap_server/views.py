@@ -346,12 +346,25 @@ def handle_push_properties(member_id: str, properties: Dict[str, str], generated
 
         for code, sensor in sensors_by_code.items():
             val = snapshot.get(code)
-            try:
-                value_numeric = float(val)
-                value_text = None
-            except:
-                value_numeric = None
-                value_text = str(val)
+
+            # Normalizar: si val es None -> value_text = ''
+            value_numeric = None
+            value_text = ""
+
+            if val is None:
+                # no value: keep numeric None and text empty
+                value_text = ""
+            else:
+                try:
+                    # intentar parsear a float
+                    value_numeric = float(val)
+                    # cuando es numérico, dejamos value_text como cadena vacía (NOT NULL en DB)
+                    value_text = ""
+                except Exception:
+                    # si no es convertible a float, guardamos la representación textual
+                    value_numeric = None
+                    # asegurarnos que value_text no sea None
+                    value_text = str(val) if val is not None else ""
 
             readings_to_create.append(
                 SensorReading(

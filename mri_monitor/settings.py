@@ -128,7 +128,22 @@ CORS_ALLOW_HEADERS = [
     'x-requested-with',
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'no-reply@yourdomain.local'
+# Configuración SMTP para envío real de correos (password reset, notificaciones, etc.)
+# Leer desde variables de entorno para no hardcodear credenciales.
+EMAIL_BACKEND = os.environ.get('DJANGO_EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST', 'smtp.ionos.es')
+EMAIL_PORT = int(os.environ.get('DJANGO_EMAIL_PORT', 587))
+EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER', 'comercial4d@4dmedica.ai')
+EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD', '4DMedica123')
+# Seguridad: TLS ó SSL (usar solo uno)
+EMAIL_USE_TLS = True
+#os.environ.get('DJANGO_EMAIL_USE_TLS', 'True').lower() in ('1', 'true', 'yes')
+EMAIL_USE_SSL = False
+#os.environ.get('DJANGO_EMAIL_USE_SSL', 'False').lower() in ('1', 'true', 'yes')
+# Dirección FROM por defecto
+DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL', 'comercial4d@4dmedica.ai')
+
+# Opcional: tiempo de reintento / logging (puedes ajustar)
+EMAIL_TIMEOUT = int(os.environ.get('DJANGO_EMAIL_TIMEOUT', 10))
 
 FRONTEND_BASE = 'http://localhost:5173'
