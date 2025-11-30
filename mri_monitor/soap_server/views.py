@@ -10,6 +10,9 @@ from django.db import transaction
 from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 
+from django.core.mail import EmailMessage
+from django.contrib.auth.models import User
+
 from datetime import datetime
 from xml.etree import ElementTree as ET
 from typing import Dict, Optional
@@ -66,6 +69,67 @@ ERROR_CODE_MAP = {
     "101": "The He pressure is not changing.",
     # etc.
 }
+
+def notify_error_report(er: ErrorReport):
+    """
+    Envía un correo a todos los usuarios activos cuando se crea una alarma (ErrorReport).
+    """
+    try:
+        # Usuarios activos con email definido
+        users = User.objects.all() \
+                            .exclude(email__isnull=True) \
+                            .exclude(email__exact='')
+
+        emails = [u.email for u in users]
+        if not emails:
+            logger.warning("No hay usuarios con email para notificar alarmas")
+            return
+
+        device_id = er.device.member_id if er.device else "Desconocido"
+
+        subject = f"[MRI Monitor] Nueva alarma en {device_id} ({er.error_code})"
+
+        # Descripción “estándar” de código si existe en el mapa
+        description = ERROR_CODE_MAP.get(er.error_code, "")
+
+        lines = [
+            "Se ha registrado una nueva alarma en el sistema.",
+            "",
+            f"Dispositivo: {device_id}",
+            f"Código de alarma: {er.error_code}",
+        ]
+
+        if er.abstract:
+            lines.append(f"Resumen: {er.abstract}")
+
+        if description:
+            lines.append(f"Descripción estándar: {description}")
+
+        if er.detail:
+            lines.append(f"Detalle: {er.detail}")
+
+        lines.append(f"Fecha/hora: {er.generated_at or er.reported_at}")
+
+        message = "\n".join(lines)
+
+        # Usamos el DEFAULT_FROM_EMAIL o el primer email como fallback
+        from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or emails[0]
+
+        # Ponemos todos los destinatarios en BCC para no exponer sus correos entre ellos
+        email = EmailMessage(
+            subject=subject,
+            body=message,
+            from_email=from_email,
+            to=[from_email],
+            bcc=emails,
+        )
+
+        email.send(fail_silently=False)
+        logger.info("Enviadas notificaciones de alarma a %d usuarios", len(emails))
+
+    except Exception:
+        logger.exception("Error enviando emails de nueva alarma")
+
 
 def _local_name(tag):
     return tag.split('}')[-1] if '}' in tag else tag
@@ -205,6 +269,8 @@ def soap_endpoint(request):
                 raw_xml=raw
             )
             logger.info("Created ErrorReport id=%s code=%s device=%s", er.id, code_norm, member_id)
+
+            notify_error_report(er)
         except Exception as e:
             logger.exception("Failed to create ErrorReport for submitFault: %s", e)
             # fallback: log in file/console and return empty 200 like server_soap.py
@@ -320,7 +386,7 @@ def handle_push_properties(member_id: str, properties: Dict[str, str], generated
                         crit_val = warn_val = None
 
                     if crit_val and val > crit_val:
-                        ErrorReport.objects.create(
+                        er = ErrorReport.objects.create(
                             device=device,
                             sensor=sensor,
                             error_code=f"{code}_CRIT",
@@ -329,9 +395,10 @@ def handle_push_properties(member_id: str, properties: Dict[str, str], generated
                             generated_at=ts,
                             raw_xml="AUTO_THRESHOLD"
                         )
+                        notify_error_report(er)
 
                     elif warn_val and val > warn_val:
-                        ErrorReport.objects.create(
+                        er = ErrorReport.objects.create(
                             device=device,
                             sensor=sensor,
                             error_code=f"{code}_WARN",
@@ -340,6 +407,7 @@ def handle_push_properties(member_id: str, properties: Dict[str, str], generated
                             generated_at=ts,
                             raw_xml="AUTO_THRESHOLD"
                         )
+                        notify_error_report(er)
 
         # ---- 3) Create SensorReadings snapshot for all sensors
         readings_to_create = []
