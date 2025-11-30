@@ -89,3 +89,31 @@ class ErrorReport(models.Model):
 
     def __str__(self):
         return f"{self.device.member_id if self.device else 'UnknownDevice'} - {self.error_code} @ {self.reported_at}"
+
+class ServiceLog(models.Model):
+    """
+    Entrada de historial de servicio de un dispositivo.
+    Guarda tipo de servicio, notas y horas del equipo en el momento del servicio.
+    """
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    device = models.ForeignKey(
+        Device,
+        on_delete=models.CASCADE,
+        related_name='service_logs'
+    )
+
+    service_type = models.CharField(max_length=200, blank=True)
+    notes = models.TextField()
+
+    # Horas opcionales en el momento del servicio
+    coldhead_hours = models.PositiveIntegerField(default=0)
+    compressor_hours = models.PositiveIntegerField(default=0)
+    adsorber_hours = models.PositiveIntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.device.member_id} | {self.service_type} | {self.created_at:%Y-%m-%d %H:%M}"

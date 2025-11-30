@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Device, Sensor, SensorReading, ErrorReport
+from .models import Device, Sensor, SensorReading, ErrorReport, ServiceLog
 
 class DeviceSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField(read_only=True)
@@ -45,3 +45,12 @@ class ErrorReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = ErrorReport
         fields = ['id', 'device', 'sensor', 'error_code', 'abstract', 'detail', 'generated_at', 'raw_xml', 'is_resolved', 'reported_at']
+
+class ServiceLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ServiceLog
+        fields = [
+            'id', 'device', 'service_type', 'notes',
+            'coldhead_hours', 'compressor_hours', 'adsorber_hours',
+            'created_at',
+        ]

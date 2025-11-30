@@ -21,12 +21,13 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from mri_monitor.core.models import Device, Sensor, SensorReading, ErrorReport
+from mri_monitor.core.models import Device, Sensor, SensorReading, ErrorReport, ServiceLog
 from mri_monitor.core.serializers import (
     SensorSerializer,
     SensorReadingSerializer,
     ErrorReportSerializer,
-    DeviceSerializer
+    DeviceSerializer,
+    ServiceLogSerializer
 )
 
 logger = logging.getLogger(__name__)
@@ -270,6 +271,50 @@ def notifications_list(request):
 
     serializer = ErrorReportSerializer(qs[:200], many=True)
     return Response(serializer.data)
+
+@api_view(['GET', 'POST'])
+def service_logs_view(request):
+    """
+    GET  /api/service_logs?member_id=FI1126MR01SMM3
+        -> lista de entradas de servicio para ese dispositivo
+
+    POST /api/service_logs
+        body JSON:
+        {
+          "member_id": "...",
+          "service_type": "...",
+          "notes": "...",
+          "coldhead_hours": 0,
+          "compressor_hours": 0,
+          "adsorber_hours": 0
+        }
+        -> crea una nueva entrada de historial
+    """
+    member_id = request.GET.get('member_id') or request.data.get('member_id')
+
+    if not member_id:
+        return Response({'detail': 'member_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        device = Device.objects.get(member_id=member_id)
+    except Device.DoesNotExist:
+        return Response({'detail': 'Device not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        logs = ServiceLog.objects.filter(device=device).order_by('-created_at')
+        serializer = ServiceLogSerializer(logs, many=True)
+        return Response(serializer.data)
+
+    # POST: crear nueva entrada
+    data = request.data.copy()
+    data['device'] = str(device.id)
+
+    serializer = ServiceLogSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # =====================  DEVICES LIST (MODIFICADO) =========================
