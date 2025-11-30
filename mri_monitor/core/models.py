@@ -36,7 +36,7 @@ class Sensor(models.Model):
     name = models.CharField(max_length=200)   # key, e.g. "He_Level"
     code = models.CharField(max_length=50, blank=True)  # raw code: "A2"
     type = models.CharField(max_length=50, default='measured')
-    last_value = models.FloatField(null=True, blank=True)
+    last_value = models.CharField(max_length=200, blank=True)
     status = models.CharField(max_length=20, default='OK')
     timestamp = models.DateTimeField(auto_now=True)
 

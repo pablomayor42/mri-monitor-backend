@@ -293,7 +293,7 @@ def handle_push_properties(member_id: str, properties: Dict[str, str], generated
 
             # Update last_value
             try:
-                sensor.last_value = float(raw_value)
+                sensor.last_value = str(raw_value)
             except Exception:
                 sensor.last_value = None
             sensor.timestamp = ts
@@ -365,6 +365,9 @@ def handle_push_properties(member_id: str, properties: Dict[str, str], generated
                     value_numeric = None
                     # asegurarnos que value_text no sea None
                     value_text = str(val) if val is not None else ""
+            
+            # 👇 AQUÍ marcamos si este sensor ha venido en el XML (update real)
+            source_flag = "PUSH" if code in incoming_keys else "SNAPSHOT"
 
             readings_to_create.append(
                 SensorReading(
@@ -373,7 +376,8 @@ def handle_push_properties(member_id: str, properties: Dict[str, str], generated
                     value_numeric=value_numeric,
                     value_text=value_text,
                     generated_at=ts,
-                    received_at=timezone.now()
+                    received_at=timezone.now(),
+                    source_member=source_flag, # indica si fue push o snapshot
                 )
             )
 

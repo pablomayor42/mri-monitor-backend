@@ -225,6 +225,7 @@ def sensor_readings(request):
         member = request.GET.get('member_id')
         sensor_q = request.GET.get('sensor_name') or request.GET.get('sensor_code')
         limit = request.GET.get('limit')
+        only_updates = request.GET.get('only_updates')  # <--- NUEVO
 
         qs = SensorReading.objects.select_related('sensor', 'device').order_by('-generated_at', '-received_at')
 
@@ -237,13 +238,16 @@ def sensor_readings(request):
                 Q(sensor__name__icontains=sensor_q)
             )
 
+        # 👇 solo lecturas que vienen de un push real
+        if only_updates and only_updates.lower() in ('1', 'true', 'yes'):
+            qs = qs.filter(source_member='PUSH')
+
         if limit:
             try:
                 n = int(limit)
                 if n > 0:
                     qs = qs[:n]
             except Exception:
-                # si limit no es numérico, ignorarlo
                 logger.warning("Invalid limit param: %r", limit)
 
         serializer = SensorReadingSerializer(qs, many=True)
