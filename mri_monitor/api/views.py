@@ -275,20 +275,9 @@ def notifications_list(request):
 @api_view(['GET', 'POST'])
 def service_logs_view(request):
     """
-    GET  /api/service_logs?member_id=FI1126MR01SMM3
-        -> lista de entradas de servicio para ese dispositivo
-
-    POST /api/service_logs
-        body JSON:
-        {
-          "member_id": "...",
-          "service_type": "...",
-          "notes": "...",
-          "coldhead_hours": 0,
-          "compressor_hours": 0,
-          "adsorber_hours": 0
-        }
-        -> crea una nueva entrada de historial
+    GET  /api/service_logs?member_id=FI1126MR01SMM3 -> lista de logs del equipo.
+    POST /api/service_logs                              -> crea un nuevo log.
+    Requiere siempre member_id válido (device existente).
     """
     member_id = request.GET.get('member_id') or request.data.get('member_id')
 

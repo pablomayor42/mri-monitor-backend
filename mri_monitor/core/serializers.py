@@ -9,9 +9,10 @@ class DeviceSerializer(serializers.ModelSerializer):
         fields = ['id', 'member_id', 'name', 'created_at', 'status']
 
     def get_status(self, obj):
-        # el cálculo real se delega en una función que inyectaremos desde api.views
-        # cuando DeviceSerializer se use desde la vista /api/devices, la vista
-        # añadirá al contexto la función 'compute_device_status' para evitar dependencias circulares.
+        """
+        Usa compute_device_status pasado en el contexto
+        (lo inyecta api.views.devices_list) para evitar dependencias circulares.
+        """
         compute_fn = self.context.get('compute_device_status')
         if callable(compute_fn):
             try:

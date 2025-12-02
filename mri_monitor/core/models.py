@@ -4,7 +4,8 @@ from django.db import models
 
 class Device(models.Model):
     """
-    Representa un equipo/asset que envía mensajes SOAP (MemberId).
+    Equipo MRI que envía datos vía SOAP.
+    member_id coincide con el MemberId remoto.
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     member_id = models.CharField(max_length=100, unique=True)   # e.g. "FI1126MR01SMM3"
@@ -29,7 +30,9 @@ class SensorDefinition(models.Model):
 
 class Sensor(models.Model):
     """
-    Sensor asociado a un Device. name = key (He_Level), code = raw (A2).
+    Sensor asociado a un Device.
+    - name: clave lógica (p.ej. "He_Level")
+    - code: código “crudo” del proveedor (p.ej. "A2")
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='sensors', null=True, blank=True)
@@ -69,7 +72,8 @@ class SensorReading(models.Model):
 
 class ErrorReport(models.Model):
     """
-    Guardamos errores procedentes de submitFault y EC codes.
+    Alarma/avería recibida vía SOAP (submitFault/EC codes).
+    Guarda código, detalle, XML original y fechas.
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     device = models.ForeignKey(Device, null=True, blank=True, on_delete=models.SET_NULL, related_name='errors')
