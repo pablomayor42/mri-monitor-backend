@@ -974,3 +974,686 @@
 [2025-11-30 16:33:30,361] INFO mri_monitor.soap_server: submitFault parsed fault: {'MemberId': 'huaghjusbjafbsbfjua', 'ErrorCode': '008', 'Abstract': 'ALRM', 'Detail': '181025 0728 ALRM 008 An RFS request for error code 8 is being sent to the OLC.', 'GeneratedAt': '2025-10-18T06:28:00Z'}
 [2025-11-30 16:33:30,364] INFO mri_monitor.soap_server: Created ErrorReport id=04d0e097-8799-4617-bbde-c57a234da1e9 code=8 device=huaghjusbjafbsbfjua
 [2025-11-30 16:33:31,584] INFO mri_monitor.soap_server: Enviadas notificaciones de alarma a 2 usuarios
+[2025-12-02 13:49:27,831] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>submitFault</Operation><ServiceName>MonitorManager</ServiceName><SecurityContext><Credentials><MemberId>huaghjusbjafbsbfjua</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><submitFault xmlns="urn:questra-a2b:MonitorManager_v1_0"><Fault><MemberId>huaghjusbjafbsbfjua</MemberId><ErrorCode>081</ErrorCode><Abstract>ALRM</Abstract><Detail>181025 0728 ALRM 008 An RFS request for error code 8 is being sent to the OLC.</Detail><GeneratedAt>2025-10-18T06:28:00Z</GeneratedAt></Fault></submitFault></Body></Envelope>
+[2025-12-02 13:49:27,834] DEBUG mri_monitor.soap_server: SOAP operation detected: submitFault
+[2025-12-02 13:49:27,834] INFO mri_monitor.soap_server: submitFault parsed fault: {'MemberId': 'huaghjusbjafbsbfjua', 'ErrorCode': '081', 'Abstract': 'ALRM', 'Detail': '181025 0728 ALRM 008 An RFS request for error code 8 is being sent to the OLC.', 'GeneratedAt': '2025-10-18T06:28:00Z'}
+[2025-12-02 13:49:27,839] INFO mri_monitor.soap_server: Created ErrorReport id=54a3531a-148d-4987-a4ce-bf84290ea50d code=81 device=huaghjusbjafbsbfjua
+[2025-12-02 13:49:28,860] INFO mri_monitor.soap_server: Enviadas notificaciones de alarma a 2 usuarios
+[2025-12-02 17:59:54,720] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?><Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><Header><RequestHeader xmlns="urn:questra-a2b:Headers_v1.0"><Operation>pushProperties</Operation><ServiceName>RemoteAccessManager</ServiceName><SecurityContext><Credentials><MemberId>PRUEBADANI</MemberId><Password>password</Password></Credentials></SecurityContext></RequestHeader></Header><Body><pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1"><MemberId>PRUEBADANI</MemberId><Reason>MONITORING</Reason><TaskId taskType="UNSOLICITED"></TaskId><Properties generatedAt="2025-06-20T09:59:00Z"><Property name="A2">72</Property><Property name="A3">5</Property><Property name="A5">19</Property><Property name="A7">65</Property><Property name="A8">6</Property><Property name="A9">12</Property><Property name="A12">5</Property><Property name="A13">1</Property></Properties></pushProperties></Body></Envelope>
+[2025-12-02 17:59:54,722] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 17:59:54,722] INFO mri_monitor.soap_server: pushProperties: 8 props, generatedAt=2025-06-20T09:59:00Z, device=PRUEBADANI
+[2025-12-02 18:02:55,109] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>PRUEBADANI</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>PRUEBADANI</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-20T09:59:00Z">
+                <Property name="A2">75</Property>
+                <Property name="A3">4.5</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">4</Property>
+                <Property name="A9">9</Property>
+                <Property name="A12">5</Property>
+                <Property name="A13">1.0</Property>
+            </Properties>
+        </pushProperties>
+    </Body>
+</Envelope>
+
+[2025-12-02 18:02:55,111] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:02:55,111] INFO mri_monitor.soap_server: pushProperties: 8 props, generatedAt=2025-06-20T09:59:00Z, device=PRUEBADANI
+[2025-12-02 18:03:38,827] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>PRUEBADANI</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>PRUEBADANI</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-21T09:59:00Z">
+                <Property name="A2">60</Property>
+                <Property name="A3">4.5</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">4</Property>
+                <Property name="A9">9</Property>
+                <Property name="A12">5</Property>
+                <Property name="A13">1.0</Property>
+            </Properties>
+        </pushProperties>
+    </Body>
+</Envelope>
+
+[2025-12-02 18:03:38,828] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:03:38,829] INFO mri_monitor.soap_server: pushProperties: 8 props, generatedAt=2025-06-21T09:59:00Z, device=PRUEBADANI
+[2025-12-02 18:04:15,923] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>PRUEBADANI</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>PRUEBADANI</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-21T09:59:00Z">
+                <Property name="A2">60</Property>
+                <Property name="A3">4.5</Property>
+                <Property name="A5">25</Property>
+                <Property name="A7">70</Property>
+                <Property name="A8">4</Property>
+                <Property name="A9">9</Property>
+                <Property name="A12">5</Property>
+                <Property name="A13">1.0</Property>
+            </Properties>
+        </pushProperties>
+    </Body>
+</Envelope>
+
+[2025-12-02 18:04:15,925] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:04:15,925] INFO mri_monitor.soap_server: pushProperties: 8 props, generatedAt=2025-06-21T09:59:00Z, device=PRUEBADANI
+[2025-12-02 18:04:59,337] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>PRUEBADANI</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>PRUEBADANI</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-21T09:59:00Z">
+                <Property name="A2">40</Property>
+                <Property name="A3">2.5</Property>
+                <Property name="A5">30</Property>
+                <Property name="A7">70</Property>
+                <Property name="A8">4</Property>
+                <Property name="A9">9</Property>
+                <Property name="A12">5</Property>
+                <Property name="A13">1.0</Property>
+            </Properties>
+        </pushProperties>
+    </Body>
+</Envelope>
+
+[2025-12-02 18:04:59,339] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:04:59,339] INFO mri_monitor.soap_server: pushProperties: 8 props, generatedAt=2025-06-21T09:59:00Z, device=PRUEBADANI
+[2025-12-02 18:06:27,121] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>PRUEBADANI</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>PRUEBADANI</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-22T09:59:00Z">
+                <Property name="A2">80</Property>
+                <Property name="A3">5.5</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+            </Properties>
+        </pushProperties>
+    </Body>
+</Envelope>
+
+[2025-12-02 18:06:27,123] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:06:27,123] INFO mri_monitor.soap_server: pushProperties: 8 props, generatedAt=2025-06-22T09:59:00Z, device=PRUEBADANI
+[2025-12-02 18:07:47,031] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>MostradorCSV</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>MostradorCSV</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-22T09:59:00Z">
+                <Property name="A2">80</Property>
+                <Property name="A3">5.5</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+            </Properties>
+        </pushProperties>
+    </Body>
+</Envelope>
+
+[2025-12-02 18:07:47,046] INFO mri_monitor.soap_server: Created new Device for MemberId=MostradorCSV
+[2025-12-02 18:07:47,046] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:07:47,046] INFO mri_monitor.soap_server: pushProperties: 8 props, generatedAt=2025-06-22T09:59:00Z, device=MostradorCSV
+[2025-12-02 18:07:50,424] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>MostradorCSV</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>MostradorCSV</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-22T09:59:00Z">
+                <Property name="A2">80</Property>
+                <Property name="A3">5.5</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+                <Property name="A13">1.1</Property>
+            </Properties>
+        </pushProperties>
+    </Body>
+</Envelope>
+
+[2025-12-02 18:07:50,426] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:07:50,426] INFO mri_monitor.soap_server: pushProperties: 8 props, generatedAt=2025-06-22T09:59:00Z, device=MostradorCSV
+[2025-12-02 18:12:22,128] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>MostradorCSV</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>MostradorCSV</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-22T09:59:00Z">
+                <Property name="A2">80</Property>
+                <Property name="A3">5.5</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+            
+[2025-12-02 18:12:22,132] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:12:22,132] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-22T09:59:00Z, device=MostradorCSV
+[2025-12-02 18:12:47,780] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>MostradorCSV</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>MostradorCSV</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-23T09:59:00Z">
+                <Property name="A2">81</Property>
+                <Property name="A3">5.2</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+            
+[2025-12-02 18:12:47,781] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:12:47,782] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-23T09:59:00Z, device=MostradorCSV
+[2025-12-02 18:18:20,936] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>LowWarning</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>LowWarning</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-23T09:59:00Z">
+                <Property name="A2">60</Property>
+                <Property name="A3">5.2</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+                
+[2025-12-02 18:18:20,941] INFO mri_monitor.soap_server: Created new Device for MemberId=LowWarning
+[2025-12-02 18:18:20,941] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:18:20,942] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-23T09:59:00Z, device=LowWarning
+[2025-12-02 18:18:28,920] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>LowWarning</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>LowWarning</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-24T09:59:00Z">
+                <Property name="A2">60</Property>
+                <Property name="A3">5.2</Property>
+                <Property name="A5">20</Property>
+                <Property name="A7">55</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+                
+[2025-12-02 18:18:28,923] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:18:28,923] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-24T09:59:00Z, device=LowWarning
+[2025-12-02 18:20:25,727] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>HighWarning</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>HighWarning</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-24T09:59:00Z">
+                <Property name="A2">60</Property>
+                <Property name="A3">5.2</Property>
+                <Property name="A5">25</Property>
+                <Property name="A7">70</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+              
+[2025-12-02 18:20:25,732] INFO mri_monitor.soap_server: Created new Device for MemberId=HighWarning
+[2025-12-02 18:20:25,733] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:20:25,733] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-24T09:59:00Z, device=HighWarning
+[2025-12-02 18:20:33,973] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>HighWarning</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>HighWarning</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-25T09:59:00Z">
+                <Property name="A2">60</Property>
+                <Property name="A3">5.2</Property>
+                <Property name="A5">25</Property>
+                <Property name="A7">71</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+              
+[2025-12-02 18:20:33,976] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:20:33,976] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-25T09:59:00Z, device=HighWarning
+[2025-12-02 18:49:46,946] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>HighWarning2</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>HighWarning2</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-25T09:59:00Z">
+                <Property name="A2">60</Property>
+                <Property name="A3">5.2</Property>
+                <Property name="A5">25</Property>
+                <Property name="A7">71</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+            
+[2025-12-02 18:49:46,951] INFO mri_monitor.soap_server: Created new Device for MemberId=HighWarning2
+[2025-12-02 18:49:46,951] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:49:46,951] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-25T09:59:00Z, device=HighWarning2
+[2025-12-02 18:49:55,183] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>HighWarning2</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>HighWarning2</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-26T09:59:00Z">
+                <Property name="A2">61</Property>
+                <Property name="A3">5.2</Property>
+                <Property name="A5">25</Property>
+                <Property name="A7">71</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+            
+[2025-12-02 18:49:55,187] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:49:55,187] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-26T09:59:00Z, device=HighWarning2
+[2025-12-02 18:54:02,344] DEBUG mri_monitor.soap_server: RAW SOAP incoming (preview): <?xml version="1.0" encoding="UTF-8"?>
+<Envelope xmlns="http://schemas.xmlsoap.org/soap/envelope/" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">
+    <Header>
+        <RequestHeader xmlns="urn:questra-a2b:Headers_v1.0">
+            <Operation>pushProperties</Operation>
+            <ServiceName>RemoteAccessManager</ServiceName>
+            <SecurityContext>
+                <Credentials>
+                    <MemberId>PRUEBA134271</MemberId>
+                    <Password>password</Password>
+                </Credentials>
+            </SecurityContext>
+        </RequestHeader>
+    </Header>
+    <Body>
+        <pushProperties xmlns="urn:questra-a2b:RemoteAccessManager_v1_1">
+            <MemberId>PRUEBA134271</MemberId>
+            <Reason>MONITORING</Reason>
+            <TaskId taskType="UNSOLICITED"></TaskId>
+            <Properties generatedAt="2025-06-26T09:59:00Z">
+                <Property name="A2">61</Property>
+                <Property name="A3">5.2</Property>
+                <Property name="A5">25</Property>
+                <Property name="A7">71</Property>
+                <Property name="A8">3</Property>
+                <Property name="A9">8</Property>
+                <Property name="A12">4</Property>
+                <Property name="A13">1.1</Property>
+
+                <!-- Datos generales -->
+                <Property name="MM3R">1.2</Property>
+                <Property name="HWSN">SN123456</Property>
+                <Property name="TZM">60</Property>
+                <Property name="CTY"></Property>
+                <Property name="CRY"></Property>
+                <Property name="NIC">2</Property>
+                <Property name="AIC">1</Property>
+
+                <!-- Alarmas habilitadas SÍ/NO -->
+                <Property name="A2E">Y</Property>
+                <Property name="A3E">Y</Property>
+                <Property name="A5E">Y</Property>
+                <Property name="A7E">Y</Property>
+            
+[2025-12-02 18:54:02,349] INFO mri_monitor.soap_server: Created new Device for MemberId=PRUEBA134271
+[2025-12-02 18:54:02,349] DEBUG mri_monitor.soap_server: SOAP operation detected: pushProperties
+[2025-12-02 18:54:02,349] INFO mri_monitor.soap_server: pushProperties: 57 props, generatedAt=2025-06-26T09:59:00Z, device=PRUEBA134271
